@@ -8,9 +8,9 @@ import Netflix from "./pages/Netflix"
   return (
     <BrowserRouter>
     <Routes> 
-      <Route exactpath ="/login" element = {<Login/>} /> 
-      <Route exactpath ="/signup" element = {<Signup/>} /> 
-      <Route exactpath ="/" element = {<Netflix/>} /> 
+      <Route path ="/login" element = {<Login />} /> 
+      <Route path ="/signup" element = {<Signup />} /> 
+      <Route path ="/" element = {<Netflix />} /> 
       </Routes>
 
     </BrowserRouter>
