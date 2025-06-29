@@ -1,16 +1,60 @@
 import React from 'react';
 import Backgroundimg from '../components/Backgroundimg';
 import Header from '../components/Header';
-import CTA from '../components/CTA';
 import { styled } from 'styled-components';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function Signup() {
+
+  const navigate = useNavigate();
+const [email , setEmail] = useState('');
+const [password , setPassword] = useState('');
+
+const checkValidity = () => email.trim() !== '' && password.trim() !== '';
+
+  const Handleclick = () => {
+     if (!checkValidity())
+     {
+      alert('please fill in all the fields')
+     }
+     else{
+        axios.post('http://127.0.0.1:3001/signup' , {
+            email, 
+            password
+        })
+        .then(response=> {
+              if (response.status === 201) {
+                    // User created successfully
+                    alert(response.data.message);
+                    navigate('/login');
+                  } else if (response.status === 200) {
+                    // Bad request — user already exists
+                      alert(response.data.message);
+                  } else {
+                    // Some other response
+                    alert('Something unexpected happened.');
+                  }
+        })
+        .catch(error=>
+        {
+            alert(error);
+        });
+     }
+     
+  };
+
+ 
+
   return (
     <Container>
       <Backgroundimg />
      
       <div className="content">
-         <Header  />
+         <Header signin />
         <div className="body">
           <div className="text-content">
             <h1>Unlimited movies, TV shows and more</h1>
@@ -20,9 +64,34 @@ export default function Signup() {
           </div>
           <div className="form-container">
             <div className="form">
-              <input type="email" placeholder="Email address" name="email" />
+              <input type="email" placeholder="Email address" name="email" 
+              onChange={(e) => setEmail(e.target.value)}
+              
+              />
+              <input type="password" placeholder="Password" name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              
+              />
              
-              <CTA />
+              <button
+              className='start'
+              onClick={Handleclick}
+              onMouseOver={(e) => (e.target.style.backgroundColor = '#8B0000')}
+              onMouseOut={(e) => (e.target.style.backgroundColor = '#e50914')}
+            >
+              Get Started
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="20"
+                viewBox="0 0 24 24"
+                width="20"
+                fill="white"
+                className="cta-icon"
+              >
+                <path d="M10 17l5-5-5-5v10z" />
+              </svg>
+            </button>
+
             </div>
             
           </div>
@@ -103,7 +172,11 @@ const Container = styled.div`
         margin-bottom: 1.5rem;
 
         input {
-          padding: 1rem;
+          
+          padding: 1rem;  
+          height: 1rem;
+          
+          font-size: 1.1rem; 
   
           border-radius: 4px;
           border: none;
@@ -116,6 +189,28 @@ const Container = styled.div`
             color: #999;
           }
         }
+
+        button.start {
+        background-color: #e50914;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0.5rem 3rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        transition: background-color 0.3s ease;
+        white-space: nowrap;
+
+        &:hover {
+          background-color: #f40612;
+        }
+      }
+
+
       }
 
       .login-button {
@@ -130,6 +225,8 @@ const Container = styled.div`
           color: white;
           text-decoration: underline;
         }
+
+        
       }
     }
   }
@@ -158,3 +255,8 @@ const Container = styled.div`
     }
   }
 `;
+
+
+
+
+

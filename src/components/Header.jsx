@@ -14,8 +14,8 @@ function Header(props) {
           alt="Netflix Logo"
         />
         </div>
-        <button onClick={() => navigate(props.login? "/login" : "/signup")}>
-          {props.login? 'LogIn' : 'Signup'}
+        <button onClick={() => navigate(props.signin? "/login" : "/signup")}>
+          {props.signin? 'SignIn' : 'SignUp'}
         </button>
     
     </Container>
