@@ -2,18 +2,17 @@ import React from 'react';
 import Backgroundimg from '../components/Backgroundimg';
 import Header from '../components/Header';
 import { styled } from 'styled-components';
-import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../Context/AppContext"
+import { useContext } from 'react';
 
 
 
 export default function Signup() {
 
   const navigate = useNavigate();
-const [email , setEmail] = useState('');
-const [password , setPassword] = useState('');
-
+  const [ email , setEmail , password , setPassword ] = useContext(UserContext);
 const checkValidity = () => email.trim() !== '' && password.trim() !== '';
 
   const Handleclick = () => {
